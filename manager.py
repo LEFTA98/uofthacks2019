@@ -1,0 +1,33 @@
+from location import Location
+from nlp_processor import Processor
+from characters import Player
+
+class Manager():
+    
+    def __init__(self):
+        """location: Location
+            map: dictionary of location name to Location"""
+        self.location = None
+        self.world_map = None
+        self.nlp_processor = None
+        self.player = None
+        
+    def make_map(self, data):
+        world_map = {}
+        for location in data['locations'].keys():
+            curr_loc = Location(location, data['locations'][location]["description"])
+            
+            for item in data['locations'][location]['items']:
+                curr_loc.add_items(item)
+            
+        for location in data['adjacencies'].keys():
+            curr_loc = world_map[location]
+            for adjacent_location in data['adjacencies'][location]:
+                curr_loc.add_adj(world_map[adjacent_location])
+                
+        self.world_map = world_map
+        self.location = data['start']
+        
+    def hack_map(self, data, start):
+        self.world_map = data
+        self.location = start

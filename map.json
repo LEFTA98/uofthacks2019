@@ -1,0 +1,13 @@
+{"locations": {"cave": {"description": "You are in a dank place.",
+						"items": [],
+						"characters": []},
+				"forest": {"description": "You are in a lush place.",
+						"items": [],
+						"characters": []},
+				"castle": {"description": "You are in a castle.",
+						"items": [],
+						"characters": []}},
+ "adjacencies": {"cave": ["forest", "castle"],
+				 "forest": ["castle", "cave"],
+				 "castle": ["forest", "cave"]},
+ "start": "cave"}

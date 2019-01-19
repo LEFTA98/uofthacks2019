@@ -7,7 +7,6 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../auth.json"
 
 
 def analyze(sentence, verbs=None):
-    """Run a sentiment analysis request on text within a passed filename."""
     client = language.LanguageServiceClient()
 
     document = types.Document(

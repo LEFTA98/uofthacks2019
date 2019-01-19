@@ -3,8 +3,8 @@ from google.cloud.language import enums
 from google.cloud.language import types
 import os
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../auth.json"
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../auth.json"
 
 def analyze(sentence, verbs=None):
     """Run a sentiment analysis request on text within a passed filename."""
@@ -39,7 +39,7 @@ def analyze(sentence, verbs=None):
     if dobj is not None:
         dobj = dobj.lemma
 
-    return Action(root, pobj, dobj)
+    return Command(root, pobj, dobj)
 
 
 def getLabel(dependency_edge):
@@ -54,15 +54,14 @@ def findTokenOfLabel(tokens, label):
     return None
 
 
-class Action():
+class Command():
     def __init__(self, root, dobj=None, pobj=None):
         self.root = root
         self.dobj = dobj
         self.pobj = pobj
 
     def __repr__(self):
-        return "Action({}, {}, {})".format(self.root, self.dobj, self.pobj)
-
+        return "Command({}, {}, {})".format(self.root, self.dobj, self.pobj)
 
 x = analyze("Google, headquartered in Mountain View, unveiled the new Android phone at the Consumer Electronic Show.  Sundar Pichai said in his keynote that users love their new Android phones.")
 x = analyze("The Blue chicken is furiously eating lasagna with a fork")

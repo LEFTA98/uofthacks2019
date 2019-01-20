@@ -1,6 +1,7 @@
 from char_actions import Attack
 from char_actions import Action
 from item import Item
+import random
 
 class Player():
     
@@ -34,11 +35,12 @@ class Player():
     
 class Character():
     
-    def __init__(self, name, health, aggression):
+    def __init__(self, name, health, aggression, description):
         self.name = name
         self.max_health = health
         self.health = health
         self.aggression = aggression
+        self.description = description
         self.status = []
         self.inventory = []
         self.attacks = []
@@ -46,3 +48,17 @@ class Character():
         
     def is_alive(self):
         return self.health > 0
+    
+    def attack(self, target):
+        if len(self.attacks) == 0:
+            pass
+        else:
+            random_int = random.randint(0, len(self.attacks))
+            chosen_attack = self.attacks[random_int]
+            
+            print(chosen_attack.text)
+            if target.is_alive():
+                target -= chosen_attack.damage
+                
+    def respond(self):
+        print(self.responses[0])

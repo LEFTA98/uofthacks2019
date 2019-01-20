@@ -12,6 +12,8 @@ class Location():
         
     def add_adj(self, location):
         self.adj.append(location)
+        if self not in location.adj:
+            location.adj.append(self)
         
     def add_character(self, character):
         self.characters.append(character)

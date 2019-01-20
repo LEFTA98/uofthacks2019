@@ -56,7 +56,7 @@ def analyze(sentence, allowed_actions=None):
     for allowed_root in allowed_actions:
         if set(getSynonyms(getLemma(allowed_root))).intersection(set(getSynonyms(root))) != set():
             for allowed_pobj in allowed_actions[allowed_root]:
-                if allowed_pobj is None or set(getSynonyms(getLemma(allowed_pobj))).intersection(set(getSynonyms(pobj))) != set():
+                if allowed_pobj is None or set(getSynonyms(getLemma(allowed_pobj))).union(set([None])).intersection(set(getSynonyms(pobj))) != set():
                     for allowed_dobj in allowed_actions[allowed_root][allowed_pobj]:
                         if set(getSynonyms(getLemma(allowed_dobj))).intersection(set(getSynonyms(dobj))):
                             return Command(allowed_root, allowed_pobj, allowed_dobj)

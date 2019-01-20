@@ -22,6 +22,8 @@ def getLemma(word):
 
 
 def analyze(sentence, allowed_actions=None):
+    sentence = sentence.lower()
+
     document = types.Document(
         content=sentence,
         type=enums.Document.Type.PLAIN_TEXT)
@@ -50,6 +52,7 @@ def analyze(sentence, allowed_actions=None):
     dobj = findTokenOfLabel(tokens, "DOBJ")
     if dobj is not None:
         dobj = dobj.lemma
+
 
     return Command(root, pobj, dobj)
 
@@ -89,9 +92,6 @@ class Command():
         return "Command({}, {}, {})".format(self.root, self.dobj, self.pobj)
 
 
-x = analyze("Google, headquartered in Mountain View, unveiled the new Android phone at the Consumer Electronic Show.  Sundar Pichai said in his keynote that users love their new Android phones.")
-x = analyze("The Blue chicken is furiously eating lasagna with a fork")
+x = analyze("Take the stick")
 
 print(x)
-
-print(getSynonyms("attack"))

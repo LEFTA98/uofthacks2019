@@ -63,7 +63,7 @@ class Manager():
 
         li_["use"] = dict()
         for item in self.player.inventory:
-            li_["use"][item] = set()
+            li_["use"][item.name] = set()
             for target in self.location.characters:
                 li_.get("use", {}).get(item.name, set()).add(target.name)
             li_.get("use", {}).get(item.name, set()).add(None)

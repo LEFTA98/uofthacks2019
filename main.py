@@ -50,7 +50,7 @@ Getting up, you look at your surroundings...""")
         
         for char in game_manager.location.characters:
             if char.is_alive() and "hidden" not in char.status:
-                s += "a " + char.name + ", "
+                s += char.name + ", "
         print("In the area you see the following living characters:")
         if s != "":
             print(s[:-2])
@@ -59,7 +59,7 @@ Getting up, you look at your surroundings...""")
         
         for char in game_manager.location.characters:
             if (not char.is_alive()) and "hidden" not in char.status:
-                s += "a " + char.name + ", "
+                s += char.name + ", "
         print("In the area you see the following dead characters:")
         if s != "":
             print(s[:-2])
@@ -68,7 +68,7 @@ Getting up, you look at your surroundings...""")
         
         for item in game_manager.location.items:
             if "hidden" not in item.status:
-                s += "a " + item.name + ", "
+                s += item.name + ", "
         print("In the area are the following items:")
         if s != "":
             print(s[:-2])
@@ -76,8 +76,8 @@ Getting up, you look at your surroundings...""")
         
         command = game_manager.process(command)
         #debug
-        print(game_manager.get_valid_actions())
-        print(command)
+#        print(game_manager.get_valid_actions())
+#        print(command)
         
         if command is None:
             print("invalid action.")
@@ -100,13 +100,13 @@ Getting up, you look at your surroundings...""")
                     print(item.description)
                     
             if game_manager.location.name == command.pobj or command.pobj is None:
-                print("Your current location is: " + command.pobj)
+                print("Your current location is: " + game_manager.location.name)
                 print("Adjacent locations are: ")
                 
                 s = ''
                     
                 for location in game_manager.location.adj:
-                    s += "a " + location.name + ", "
+                    s += location.name + ", "
                 if s!= '':
                     print(s[:-2])
                     

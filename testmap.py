@@ -43,8 +43,8 @@ def temp(target):
 data["Clearing"].add_item(Item("flask", "They are bruised and slightly discoloured, with strange white baubles glittering inside", True, False, temp, None))
 data["Clearing"].add_item(Item("tissues", "You notice a scarred hand underneath the tissues.", False, False, None, None))
 data["Clearing"].add_item(Item("body", "The body twitches slightly as you move closer. Its face is badly scarred, and wears thick armour and boots. Their weapon is missing and nowhere to be found.", False, False, None, "Hidden"))
-data["Clearing"].add_item(Item("armour", "The armour glitters with thick scales, but it has been used often. Its fabric is dirty and torn.", False, False, None, None, "Hidden"))
-data["Clearing"].add_item(Item("boots", "The boots are dark-coloured and have warm fur lining its insides. It'll greatly help your resistance to the cold if you put them on.", False, False, None, None, "Hidden"))
+data["Clearing"].add_item(Item("chestplate", "The armour glitters with thick scales, but it has been used often. Its fabric is dirty and torn.", False, False, None, None, "Hidden"))
+data["Clearing"].add_item(Item("pair of boots", "The boots are dark-coloured and have warm fur lining its insides. It'll greatly help your resistance to the cold if you put them on.", False, False, None, None, "Hidden"))
 #ADD CHARACTERS HERE
 data["Crossroads"].add_character(Character("Guide of Astralon", 10, False, "A man materializes in thin air on the road-bend. He's wearing a golden cloak and his long beard floats over his thin locket. There's a soft halo around the ground on which he stands. You can ask him for advice if you wish."))
 data["Pond of Healing"].add_character(Character("Tikki", 5, True, "A small bouncy fairy, with bright eyes and dark locks. She wears a simple dark blue dress that drapes around her shoulders."))

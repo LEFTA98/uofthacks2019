@@ -144,7 +144,9 @@ Getting up, you look at your surroundings...""")
                     print("You strike the "+" target with your " + item.name + "!")
                     if prev_hp > 0 and not target.is_alive():
                             print("The target falls!")
-                            
+
+        elif command.root == Command("move", None, "leaves") and game_manager.location.name == "Clearing":
+            game_manager.getItem("body")
         elif command is None:
             print("Invalid action.")
             

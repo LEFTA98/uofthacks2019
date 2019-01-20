@@ -41,28 +41,53 @@ class Manager():
 
     def get_valid_actions(self):
         li_ = {}
+        li_["inspect"] = {None: set()}
         for target in self.location.items + self.location.characters + [self.location] + self.player.inventory:
             li_.get("inspect", {}).get(None, set()).add(target.name)
 
+        li_["take"] = {None: set()}
         for target in self.location.items:
             li_.get("take", {}).get(None, set()).add(target.name)
 
+        li_["move"] = {None: set()}
         for target in self.location.adj:
             li_.get("move", {}).get(None, set()).add(target.name)
 
+        li_["attack"] = dict()
         for item in self.location.items:
+            li_["attack"][item] = li_["attack"].get(item, set())
             if item.is_weapon:
                 for target in self.location.characters:
                     li_.get("attack", {}).get(item, set()).add(target.name)
 
+        li_["use"] = dict()
         for item in self.player.inventory:
+            li_["use"][item] = set()
             for target in self.location.characters:
                 li_.get("use", {}).get(item, set()).add(target.name)
             li_.get("use", {}).get(item, set()).add(None)
 
         def add_itneract(a, b, c):
+            li_[a] = li_.get(a, dict())
+            li_[a][b] = li_[a].get(b, set())
             li_.get(a, {}).get(b, set()).add(c)
         # put any hardcoded iteractions here
         # FORMAT: add_interact("eat", "fork", "mushrooms") #### For something like Eat the mushrooms with a fork
 
+        # self.location["Clearing"].
+
         return li_
+
+    def getItem(self, name):
+        for item self.location.items:
+            if item.name == name:
+                return item
+        return None
+
+
+def get_and_add(dic, key, value):
+    if key not in dic:
+        dic[key] = {}
+        return dic[key]
+    else:
+        return dic[key]

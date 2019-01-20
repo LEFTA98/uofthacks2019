@@ -84,6 +84,7 @@ Getting up, you look at your surroundings...""")
                     break
                 
             print("You put the " + item.name + " into your bag.")
+            
         elif command.root == 'inspect':
             for item in game_manager.location.items + game_manager.player.inventory:
                 if item.name == command.pobj:
@@ -109,11 +110,44 @@ Getting up, you look at your surroundings...""")
                 for zone in game_manager.location.adj:
                     if zone.name == command.pobj:
                         game_manager.location = zone
-                        print("You move to the " + zone.name)
+                        print("You move to the " + zone.name + ".")
             else:
                 print("The enemies cut you off!")
+                
+        elif command.root == 'use':
+            target = game_manager.player
+            for character in game_manager.location.characters:
+                if character.name == command.pobj:
+                    target = character
+                    
+            for item in game_manager.player.inventory:
+                if item.name == command.dobj:
+                    prev_hp = target.health
+                    item.on_use(target)
+                    if target == game_manager.player:
+                        print("You use the "+ item.name + " on yourself.")
+                    else:
+                        print("You use the "+ item.name + " on the "+ target.name + ".")
+                        if prev_hp > 0 and not target.is_alive():
+                            print("The target falls!")
+                            
+        elif command.root == "attack":
+            target = None
+            for character in game_manager.location.characters:
+                if character.name == command.pobj:
+                    target = character
+                    
+            for item in game_manager.location.items:
+                if item.name == command.dobj:
+                    prev_hp = target.health
+                    item.on_use(target)
+                    print("You strike the "+" target with your " + item.name + "!")
+                    if prev_hp > 0 and not target.is_alive():
+                            print("The target falls!")
+                            
         elif command is None:
             print("Invalid action.")
+            
         
         last_command = command
         print("\n")

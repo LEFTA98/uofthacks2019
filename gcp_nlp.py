@@ -53,8 +53,12 @@ def analyze(sentence, allowed_actions=None):
     if dobj is not None:
         dobj = dobj.lemma
 
-
-    return Command(root, pobj, dobj)
+    for allowed_root in allowed_actions:
+        if allowed_root in getSynonyms(allowed_actions):
+            for allowed_pobj in allowed_actions[allowed_root]:
+                if allowed_pobj is None or allowed_pobj in getSynonyms(pobj):
+                    for allowed_dobj in allowed_actions[allowed_root][allowed_pobj]:
+                        return Command(allowed_root, allowed_pobj, allowed_dobj)
 
 
 def getLabel(dependency_edge):
@@ -75,7 +79,7 @@ def getSynonyms(word):
                                               word),
                                           headers=dict_auth).content)["results"][0]["lexicalEntries"][0]["entries"][0]["senses"]
 
-    synonyms = sum([result["synonyms"] for result in results], [])
+    synonyms = sum([result["synonyms"] for result in results], [word])
     synonyms = [word["text"]
                 for word in synonyms if len(word["text"].split()) == 1]
 

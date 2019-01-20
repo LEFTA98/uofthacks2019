@@ -8,7 +8,7 @@ if __name__ == "__main__":
 #    json1_str = json1_file.read()
 #    json1_data = json.loads(json1_str)
     
-    data_file = open("map.py")
+    data_file = open("testmap.py")
     data_str = data_file.read()
 #    
     game_manager = Manager()
@@ -77,6 +77,8 @@ Getting up, you look at your surroundings...""")
         command = game_manager.process(command)
         #debug
         print(game_manager.get_valid_actions())
+        print(command)
+        
         if command is None:
             print("invalid action.")
         elif command.root == 'take':
@@ -93,18 +95,18 @@ Getting up, you look at your surroundings...""")
                 if item.name == command.pobj:
                     print(item.description)
                     
-            for character in game_manager.characters:
+            for character in game_manager.location.characters:
                 if character.name == command.pobj:
                     print(item.description)
                     
-            if game_manager.location.name == command.pobj:
+            if game_manager.location.name == command.pobj or command.pobj is None:
                 print("Your current location is: " + command.pobj)
                 print("Adjacent locations are: ")
                 
                 s = ''
                     
                 for location in game_manager.location.adj:
-                    s += "a " + item.name + ", "
+                    s += "a " + location.name + ", "
                 if s!= '':
                     print(s[:-2])
                     

@@ -44,6 +44,7 @@ class Manager():
         li_["inspect"] = {None: set()}
         for target in self.location.items + self.location.characters + [self.location] + self.player.inventory:
             li_.get("inspect", {}).get(None, set()).add(target.name)
+        li_.get("inspect", {}).get(None, set()).add(None)
 
         li_["take"] = {None: set()}
         for target in self.location.items:
@@ -58,14 +59,14 @@ class Manager():
             li_["attack"][item] = li_["attack"].get(item, set())
             if item.is_weapon:
                 for target in self.location.characters:
-                    li_.get("attack", {}).get(item, set()).add(target.name)
+                    li_.get("attack", {}).get(item.name, set()).add(target.name)
 
         li_["use"] = dict()
         for item in self.player.inventory:
             li_["use"][item] = set()
             for target in self.location.characters:
-                li_.get("use", {}).get(item, set()).add(target.name)
-            li_.get("use", {}).get(item, set()).add(None)
+                li_.get("use", {}).get(item.name, set()).add(target.name)
+            li_.get("use", {}).get(item.name, set()).add(None)
 
         def add_itneract(a, b, c):
             li_[a] = li_.get(a, dict())
@@ -79,7 +80,7 @@ class Manager():
         return li_
 
     def getItem(self, name):
-        for item self.location.items:
+        for item in self.location.items:
             if item.name == name:
                 return item
         return None

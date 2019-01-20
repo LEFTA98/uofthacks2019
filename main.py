@@ -26,18 +26,18 @@ if __name__ == "__main__":
     # game_manager.make_map(json1_data)
     
     print("""You wake up, badly bruised, freezing and with barely enough energy to move. 
-Getting up, you look at your surroundings...""")
+Getting up, you inspect your surroundings...""")
     
     #debug
     #print(game_manager.location.name)
-    last_action = None
+    last_command = None
     
     while True:
         #enemies only attack after a non-inspect action
-        if not (last_action is None or last_action.root == "inspect"):
+        if not (last_command is None or last_command.root == "inspect"):
             for character in game_manager.location.characters:
                 if character.aggression and character.is_alive():
-                    character.attack(game_manager.player)
+                    print(character.attack(game_manager.player))
                     
         if not game_manager.player.is_alive():
             print("You succumb to your injuries.")
@@ -78,6 +78,7 @@ Getting up, you look at your surroundings...""")
         #debug
 #        print(game_manager.get_valid_actions())
 #        print(command)
+#        print(game_manager.player.health)
         
         if command is None:
             print("invalid action.")
@@ -97,7 +98,7 @@ Getting up, you look at your surroundings...""")
                     
             for character in game_manager.location.characters:
                 if character.name == command.pobj:
-                    print(item.description)
+                    print(character.description)
                     
             if game_manager.location.name == command.pobj or command.pobj is None:
                 print("Your current location is: " + game_manager.location.name)
@@ -121,6 +122,30 @@ Getting up, you look at your surroundings...""")
                 
         elif command.root == 'use':
             target = game_manager.player
+            for item in game_manager.player.inventory:
+                if item.name==command.pobj:
+                    item.on_use(target)
+                    if item.name=="flask":
+                        print("The liquid inside heals you!")
+                    elif item.name=="mushrooms":
+                        print("They taste a bit strange, but seem to have restorative properties.")
+#            for character in game_manager.location.characters:
+#                if character.name == command.pobj:
+#                    target = character
+#                    
+#            for item in game_manager.player.inventory:
+#                if item.name == command.dobj:
+#                    prev_hp = target.health
+#                    item.on_use(target)
+#                    if target == game_manager.player:
+#                        print("You use the "+ item.name + " on yourself.")
+#                    else:
+#                        print("You use the "+ item.name + " on the "+ target.name + ".")
+#                        if prev_hp > 0 and not target.is_alive():
+#                            print("The target falls!")
+                            
+        elif command.root == "attack":
+            target = None
             for character in game_manager.location.characters:
                 if character.name == command.pobj:
                     target = character
@@ -129,24 +154,10 @@ Getting up, you look at your surroundings...""")
                 if item.name == command.dobj:
                     prev_hp = target.health
                     item.on_use(target)
-                    if target == game_manager.player:
-                        print("You use the "+ item.name + " on yourself.")
-                    else:
-                        print("You use the "+ item.name + " on the "+ target.name + ".")
-                        if prev_hp > 0 and not target.is_alive():
-                            print("The target falls!")
-                            
-        elif command.root == "attack":
-            target = None
-            for character in game_manager.location.characters:
-                if character.name == command.pobj:
-                    target = character
-                    
-            for item in game_manager.location.items:
-                if item.name == command.dobj:
-                    prev_hp = target.health
-                    item.on_use(target)
                     print("You strike the "+" target with your " + item.name + "!")
+                    if not target.aggression:
+                        target.aggression = True
+                        print("Your target has become aggressive!")
                     if prev_hp > 0 and not target.is_alive():
                             print("The target falls!")
                             

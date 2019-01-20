@@ -1,9 +1,6 @@
 from char_actions import Attack
 from char_actions import Action
 from item import Item
-import random
-random.seed(0)
-
 
 class Player():
 
@@ -25,6 +22,12 @@ class Player():
             return "You are moderately injured."
         else:
             return "You are grievously injured."
+        
+    def has_weapon(self):
+        for item in self.inventory:
+            if item.is_weapon:
+                return True
+        return False
 
     def pickup(self, item):
         self.inventory.append(item)
@@ -54,14 +57,16 @@ class Character():
 
     def attack(self, target):
         if len(self.attacks) == 0:
-            pass
+            return ""
         else:
-            random_int = random.randint(0, len(self.attacks))
-            chosen_attack = self.attacks[random_int]
+            chosen_attack = self.attacks[0]
 
-            print(chosen_attack.text)
             if target.is_alive():
-                target -= chosen_attack.damage
+                target.health -= chosen_attack.damage
+            return chosen_attack.text
+                
+    def add_attack(self, attack_to_add):
+        self.attacks.append(attack_to_add)
 
     def respond(self):
         print(self.response)

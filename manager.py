@@ -55,7 +55,7 @@ class Manager():
             li_.get("move", {}).get(None, set()).add(target.name)
 
         li_["attack"] = dict()
-        for item in self.location.items:
+        for item in self.player.inventory:
             li_["attack"][item.name] = li_["attack"].get(item.name, set())
             if item.is_weapon:
                 for target in self.location.characters:
@@ -66,7 +66,8 @@ class Manager():
             li_["use"][item.name] = set()
             for target in self.location.characters:
                 li_.get("use", {}).get(item.name, set()).add(target.name)
-            li_.get("use", {}).get(item.name, set()).add(None)
+            li_["use"][None] = set()
+            li_.get("use", {}).get(None, set()).add(item.name)
 
         def add_itneract(a, b, c):
             li_[a] = li_.get(a, dict())

@@ -20,3 +20,9 @@ class Location():
         
     def add_item(self, item):
         self.items.append(item)
+        
+    def can_move(self):
+        for character in self.characters:
+            if character.aggresive and character.is_alive():
+                return False
+        return True

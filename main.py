@@ -76,5 +76,44 @@ Getting up, you look at your surroundings...""")
         
         command = game_manager.process(command)
         
+        if command.root == 'take':
+            for item in game_manager.location.items:
+                if item.name == command.pobj:
+                    game_manager.player.inventory.append(item)
+                    game_manager.location.items.remove(item)
+                    break
+                
+            print("You put the " + item.name + " into your bag.")
+        elif command.root == 'inspect':
+            for item in game_manager.location.items + game_manager.player.inventory:
+                if item.name == command.pobj:
+                    print(item.description)
+                    
+            for character in game_manager.characters:
+                if character.name == command.pobj:
+                    print(item.description)
+                    
+            if game_manager.location.name == command.pobj:
+                print("Your current location is: " + command.pobj)
+                print("Adjacent locations are: ")
+                
+                s = ''
+                    
+                for location in game_manager.location.adj:
+                    s += "a " + item.name + ", "
+                if s!= '':
+                    print(s[:-2])
+                    
+        elif command.root == 'move':
+            if game_manager.location.can_move():
+                for zone in game_manager.location.adj:
+                    if zone.name == command.pobj:
+                        game_manager.location = zone
+                        print("You move to the " + zone.name)
+            else:
+                print("The enemies cut you off!")
+        elif command is None:
+            print("Invalid action.")
+        
         last_command = command
         print("\n")

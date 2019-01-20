@@ -42,8 +42,10 @@ class Manager():
     def get_valid_actions(self):
         li_ = {}
         li_["inspect"] = {None: set()}
+        
         for target in self.location.items + self.location.characters + [self.location] + self.player.inventory:
             li_.get("inspect", {}).get(None, set()).add(target.name)
+            
         li_.get("inspect", {}).get(None, set()).add(None)
 
         li_["take"] = {None: set()}

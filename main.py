@@ -74,6 +74,9 @@ Getting up, you inspect your surroundings...""")
         if s != "":
             print(s[:-2])
         command = input("What do you do? \n")
+        
+        if command.strip() == "break":
+            exit()
 
         command = game_manager.process(command)
         # debug
@@ -94,7 +97,7 @@ Getting up, you inspect your surroundings...""")
 
         elif command.root == 'inspect':
             for item in game_manager.location.items + game_manager.player.inventory:
-                if item.name == command.pobj:
+                if item.name == command.pobj or item.name == command.dobj:
                     print(item.description)
 
             for character in game_manager.location.characters:

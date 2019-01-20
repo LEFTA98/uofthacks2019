@@ -88,7 +88,9 @@ def getSynonyms(word):
                     for word in synonyms if (len(word["text"].split()) == 1)]
 
         synonyms.insert(0, word)
-
+        
+        if word == "inspect":
+            synonyms.append("look")
         return synonyms
     except Exception as e:
         return [word]

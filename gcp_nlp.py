@@ -54,11 +54,11 @@ def analyze(sentence, allowed_actions=None):
         dobj = dobj.lemma
 
     for allowed_root in allowed_actions:
-        if getLemma(allowed_root) in getSynonyms(root):
+        if set(getSynonyms(getLemma(allowed_root))).intersection(set(getSynonyms(root))) != set():
             for allowed_pobj in allowed_actions[allowed_root]:
-                if allowed_pobj is None or getLemma(allowed_pobj) in getSynonyms(pobj):
+                if allowed_pobj is None or set(getSynonyms(getLemma(allowed_pobj))).intersection(set(getSynonyms(pobj))) != set():
                     for allowed_dobj in allowed_actions[allowed_root][allowed_pobj]:
-                        if getLemma(allowed_dobj) in getSynonyms(dobj):
+                        if set(getSynonyms(getLemma(allowed_dobj))).intersection(set(getSynonyms(dobj))):
                             return Command(allowed_root, allowed_pobj, allowed_dobj)
     return None
 
@@ -91,7 +91,7 @@ def getSynonyms(word):
 
         return synonyms
     except Exception as e:
-        return []
+        return [word]
 
 
 class Command():
@@ -106,6 +106,6 @@ class Command():
 
 if __name__ == "__main__":
     x = analyze("Take the mushrooms", {
-                "take": {None: {"armour", "mushrooms"}}})
+        "take": {None: {"armour", "mushrooms"}}})
 
     print(x)

@@ -40,9 +40,7 @@ def analyze(sentence, allowed_actions=None):
             break
 
     if main_action is None:
-        # Say I don't know what you mean or smth
-        pass
-
+        return Command(None)
     root = findTokenOfLabel(tokens, "ROOT")
     if root is not None:
         root = root.lemma
@@ -54,11 +52,12 @@ def analyze(sentence, allowed_actions=None):
         dobj = dobj.lemma
 
     for allowed_root in allowed_actions:
-        if allowed_root in getSynonyms(allowed_actions):
+        if allowed_root in getSynonyms(root):
             for allowed_pobj in allowed_actions[allowed_root]:
                 if allowed_pobj is None or allowed_pobj in getSynonyms(pobj):
                     for allowed_dobj in allowed_actions[allowed_root][allowed_pobj]:
                         return Command(allowed_root, allowed_pobj, allowed_dobj)
+    return Command(None)
 
 
 def getLabel(dependency_edge):
@@ -79,9 +78,12 @@ def getSynonyms(word):
                                               word),
                                           headers=dict_auth).content)["results"][0]["lexicalEntries"][0]["entries"][0]["senses"]
 
-    synonyms = sum([result["synonyms"] for result in results], [word])
+    synonyms = sum([result["synonyms"] for result in results], [])
+
     synonyms = [word["text"]
-                for word in synonyms if len(word["text"].split()) == 1]
+                for word in synonyms if (len(word["text"].split()) == 1)]
+
+    synonyms.insert(0, word)
 
     return synonyms
 
@@ -96,6 +98,6 @@ class Command():
         return "Command({}, {}, {})".format(self.root, self.dobj, self.pobj)
 
 
-x = analyze("Take the stick")
+x = analyze("Take the branch", {"obtain": {None: {"stick"}}})
 
 print(x)

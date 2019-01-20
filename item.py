@@ -7,4 +7,4 @@ class Item():
         self.is_weapon = is_weapon
         self.on_use = on_use
         self.on_pickup = on_pickup
-        self.status = [status]
+        self.status = [status] if status else []

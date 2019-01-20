@@ -56,7 +56,7 @@ class Manager():
 
         li_["attack"] = dict()
         for item in self.location.items:
-            li_["attack"][item] = li_["attack"].get(item, set())
+            li_["attack"][item.name] = li_["attack"].get(item.name, set())
             if item.is_weapon:
                 for target in self.location.characters:
                     li_.get("attack", {}).get(item.name, set()).add(target.name)

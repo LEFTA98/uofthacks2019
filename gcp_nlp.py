@@ -2,13 +2,26 @@ from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
 import os
-
+import json
+import requests
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../auth.json"
 
-def analyze(sentence, verbs=None):
-    client = language.LanguageServiceClient()
+client = language.LanguageServiceClient()
 
+dict_auth = json.load(open("../dict_auth.json"))
+
+
+def getLemma(word):
+    document = types.Document(
+        content=word,
+        type=enums.Document.Type.PLAIN_TEXT)
+    annotations = client.analyze_syntax(document=document)
+
+    return annotations.tokens[0].lemma
+
+
+def analyze(sentence, allowed_actions=None):
     document = types.Document(
         content=sentence,
         type=enums.Document.Type.PLAIN_TEXT)
@@ -53,6 +66,19 @@ def findTokenOfLabel(tokens, label):
     return None
 
 
+def getSynonyms(word):
+    results = json.loads(requests.request(method="GET",
+                                          url="https://od-api.oxforddictionaries.com/api/v1/entries/en/{}/synonyms".format(
+                                              word),
+                                          headers=dict_auth).content)["results"][0]["lexicalEntries"][0]["entries"][0]["senses"]
+
+    synonyms = sum([result["synonyms"] for result in results], [])
+    synonyms = [word["text"]
+                for word in synonyms if len(word["text"].split()) == 1]
+
+    return synonyms
+
+
 class Command():
     def __init__(self, root, dobj=None, pobj=None):
         self.root = root
@@ -62,7 +88,10 @@ class Command():
     def __repr__(self):
         return "Command({}, {}, {})".format(self.root, self.dobj, self.pobj)
 
+
 x = analyze("Google, headquartered in Mountain View, unveiled the new Android phone at the Consumer Electronic Show.  Sundar Pichai said in his keynote that users love their new Android phones.")
 x = analyze("The Blue chicken is furiously eating lasagna with a fork")
 
 print(x)
+
+print(getSynonyms("attack"))

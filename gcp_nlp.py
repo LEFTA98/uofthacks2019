@@ -57,7 +57,7 @@ def analyze(sentence, allowed_actions=None):
                 if allowed_pobj is None or allowed_pobj in getSynonyms(pobj):
                     for allowed_dobj in allowed_actions[allowed_root][allowed_pobj]:
                         return Command(allowed_root, allowed_pobj, allowed_dobj)
-    return Command(None)
+    return None
 
 
 def getLabel(dependency_edge):

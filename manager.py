@@ -1,6 +1,7 @@
 from location import Location
 from gcp_nlp import Command
 from characters import Player
+import gcp_nlp
 
 
 class Manager():
@@ -36,8 +37,7 @@ class Manager():
 
     # nlpification happens here
     def process(self, input):
-        #
-        return "MAGIC"
+        return gcp_nlp.analyze(input, allowed_actions=self.get_valid_actions())
 
     def get_valid_actions(self):
         li_ = {}

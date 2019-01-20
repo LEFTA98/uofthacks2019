@@ -98,6 +98,7 @@ class Command():
         return "Command({}, {}, {})".format(self.root, self.dobj, self.pobj)
 
 
-x = analyze("Take the branch", {"obtain": {None: {"stick"}}})
+if __name__ == "__main__":
+    x = analyze("Take the branch", {"obtain": {None: {"stick"}}})
 
-print(x)
+    print(x)

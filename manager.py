@@ -1,5 +1,5 @@
 from location import Location
-from nlp_processor import Processor
+from gcp_nlp import Command
 from characters import Player
 
 class Manager():
@@ -31,3 +31,34 @@ class Manager():
     def hack_map(self, data, start):
         self.world_map = data
         self.location = start
+        
+    #nlpification happens here
+    def process(self, input):
+        #
+        return "MAGIC"
+    
+    def get_valid_actions(self):
+        li_ = []
+        for target in self.location.items + self.location.characters + [self.location.name]:
+            li_.append(["inspect", None, target])
+            
+        for target in self.location.items:
+            li_.append(["take", None, target])
+            
+        for target in self.location.adj:
+            li_.append(["move", None, target])
+            
+        for item in self.location.items:
+            if item.is_weapon:
+                for target in self.location.characters:
+                    li_.append(["attack", item, target])
+                    
+        for item in self.location.items:
+            for target in self.location.characters + [None]:
+                li_.append(["use", item, target])
+                
+        #put any hardcoded iteractions here
+        
+        return li_
+            
+        

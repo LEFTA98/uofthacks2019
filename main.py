@@ -28,10 +28,39 @@ if __name__ == "__main__":
 Getting up, you look at your surroundings...""")
     
     #debug
-    print(game_manager.location.name)
+    #print(game_manager.location.name)
     
     while True:
         print(game_manager.location.description)
         print(game_manager.player.get_health_state())
+        
+        s = ""
+        
+        for char in game_manager.location.characters:
+            if char.is_alive() and "hidden" not in char.status:
+                s += "a " + char.name + ", "
+        print("In the area you see the following living characters:")
+        if s != "":
+            print(s[:-2])
+
+        s = ""
+        
+        for char in game_manager.location.characters:
+            if (not char.is_alive()) and "hidden" not in char.status:
+                s += "a " + char.name + ", "
+        print("In the area you see the following dead characters:")
+        if s != "":
+            print(s[:-2])
+                
+        s = ""
+        
+        for item in game_manager.location.items:
+            if "hidden" not in item.status:
+                s += "a " + item.name + ", "
+        print("In the area are the following items:")
+        if s != "":
+            print(s[:-2])
         command = input("What do you do? \n")
         
+        command = game_manager.process(command)
+        print("\n")

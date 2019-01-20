@@ -1,3 +1,7 @@
+from char_actions import Attack
+from char_actions import Action
+from item import Item
+
 class Player():
     
     def __init__(self):
@@ -18,6 +22,15 @@ class Player():
             return "You are moderately injured."
         else:
             return "You are grievously injured."
+        
+    def pickup(self, item):
+        self.inventory.append(item)
+        item.on_pickup()
+        
+    def use(self, item, target):
+        item.on_use(target)
+        if item.consumable:
+            self.inventory.remove(item)
     
 class Character():
     

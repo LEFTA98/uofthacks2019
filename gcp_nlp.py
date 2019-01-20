@@ -52,11 +52,12 @@ def analyze(sentence, allowed_actions=None):
         dobj = dobj.lemma
 
     for allowed_root in allowed_actions:
-        if allowed_root in getSynonyms(root):
+        if getLemma(allowed_root) in getSynonyms(root):
             for allowed_pobj in allowed_actions[allowed_root]:
-                if allowed_pobj is None or allowed_pobj in getSynonyms(pobj):
+                if allowed_pobj is None or getLemma(allowed_pobj) in getSynonyms(pobj):
                     for allowed_dobj in allowed_actions[allowed_root][allowed_pobj]:
-                        return Command(allowed_root, allowed_pobj, allowed_dobj)
+                        if getLemma(allowed_dobj) in getSynonyms(dobj):
+                            return Command(allowed_root, allowed_pobj, allowed_dobj)
     return None
 
 
@@ -99,6 +100,7 @@ class Command():
 
 
 if __name__ == "__main__":
-    x = analyze("Take the branch", {"obtain": {None: {"stick"}}})
+    x = analyze("Take the mushrooms", {
+                "take": {None: {"armour", "mushrooms"}}})
 
     print(x)

@@ -2,6 +2,7 @@ from char_actions import Attack
 from char_actions import Action
 from item import Item
 import random
+random.seed(0)
 
 class Player():
     

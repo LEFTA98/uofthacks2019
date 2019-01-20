@@ -12,5 +12,5 @@ class Attack():
     
     def __init__(self, damage, text):
         self.damage = damage
-        self.text = text
+        self.text = text # The line that shows when attack goes through
     

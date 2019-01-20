@@ -13,6 +13,8 @@ dict_auth = json.load(open("../dict_auth.json"))
 
 
 def getLemma(word):
+    if word is None:
+        return None
     document = types.Document(
         content=word,
         type=enums.Document.Type.PLAIN_TEXT)

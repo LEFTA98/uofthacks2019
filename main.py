@@ -75,8 +75,11 @@ Getting up, you look at your surroundings...""")
         command = input("What do you do? \n")
         
         command = game_manager.process(command)
-        
-        if command.root == 'take':
+        #debug
+        print(game_manager.get_valid_actions())
+        if command is None:
+            print("invalid action.")
+        elif command.root == 'take':
             for item in game_manager.location.items:
                 if item.name == command.pobj:
                     game_manager.player.inventory.append(item)
@@ -145,8 +148,6 @@ Getting up, you look at your surroundings...""")
                     if prev_hp > 0 and not target.is_alive():
                             print("The target falls!")
                             
-        elif command is None:
-            print("Invalid action.")
             
         
         last_command = command

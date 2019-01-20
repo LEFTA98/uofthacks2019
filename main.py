@@ -7,7 +7,10 @@ if __name__ == "__main__":
 #    json1_file = open('map.json')
 #    json1_str = json1_file.read()
 #    json1_data = json.loads(json1_str)
-    
+    print("\n"*30)
+
+    print("Welcome to Silescia, a text adventure that understands anything you tell it! \n\n")
+
     data_file = open("testmap.py")
     data_str = data_file.read()
 #    
@@ -74,7 +77,7 @@ Getting up, you inspect your surroundings...""")
         if s != "":
             print(s[:-2])
         command = input("What do you do? \n")
-        
+        print("\n"*30)
         command = game_manager.process(command)
         #debug
 #        print(game_manager.get_valid_actions())

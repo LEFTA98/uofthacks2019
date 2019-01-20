@@ -76,19 +76,22 @@ def findTokenOfLabel(tokens, label):
 
 
 def getSynonyms(word):
-    results = json.loads(requests.request(method="GET",
-                                          url="https://od-api.oxforddictionaries.com/api/v1/entries/en/{}/synonyms".format(
-                                              word),
-                                          headers=dict_auth).content)["results"][0]["lexicalEntries"][0]["entries"][0]["senses"]
+    try:
+        results = json.loads(requests.request(method="GET",
+                                              url="https://od-api.oxforddictionaries.com/api/v1/entries/en/{}/synonyms".format(
+                                                  word),
+                                              headers=dict_auth).content)["results"][0]["lexicalEntries"][0]["entries"][0]["senses"]
 
-    synonyms = sum([result["synonyms"] for result in results], [])
+        synonyms = sum([result["synonyms"] for result in results], [])
 
-    synonyms = [word["text"]
-                for word in synonyms if (len(word["text"].split()) == 1)]
+        synonyms = [word["text"]
+                    for word in synonyms if (len(word["text"].split()) == 1)]
 
-    synonyms.insert(0, word)
+        synonyms.insert(0, word)
 
-    return synonyms
+        return synonyms
+    except Exception as e:
+        return []
 
 
 class Command():

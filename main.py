@@ -51,8 +51,8 @@ Getting up, you inspect your surroundings...""")
         for char in game_manager.location.characters:
             if char.is_alive() and "hidden" not in char.status:
                 s += char.name + ", "
-        print("In the area you see the following living characters:")
         if s != "":
+            print("In the area you see the following living characters:")
             print(s[:-2])
 
         s = ""
@@ -60,8 +60,9 @@ Getting up, you inspect your surroundings...""")
         for char in game_manager.location.characters:
             if (not char.is_alive()) and "hidden" not in char.status:
                 s += char.name + ", "
-        print("In the area you see the following dead characters:")
+        
         if s != "":
+            print("In the area you see the following dead characters:")
             print(s[:-2])
                 
         s = ""

@@ -42,25 +42,25 @@ class Manager():
     def get_valid_actions(self):
         li_ = {}
         for target in self.location.items + self.location.characters + [self.location.name]:
-            li_.get("inspect", {}).get(None, set{}).add(target)
+            li_.get("inspect", {}).get(None, set()).add(target)
 
         for target in self.location.items:
-            li_.get("take", {}).get(None, set{}).add(target)
+            li_.get("take", {}).get(None, set()).add(target)
 
         for target in self.location.adj:
-            li_.get("move", {}).get(None, set{}).add(target)
+            li_.get("move", {}).get(None, set()).add(target)
 
         for item in self.location.items:
             if item.is_weapon:
                 for target in self.location.characters:
-                    li_.get("attack", {}).get(item, set{}).add(target)
+                    li_.get("attack", {}).get(item, set()).add(target)
 
         for item in self.location.items:
             for target in self.location.characters + [None]:
-                li_.get("use", {}).get(item, set{}).add(target)
+                li_.get("use", {}).get(item, set()).add(target)
 
         def add_itneract(a, b, c):
-            li_.get(a, {}).get(b, set{}).add(c)
+            li_.get(a, {}).get(b, set()).add(c)
         # put any hardcoded iteractions here
         # FORMAT: add_interact("eat", "fork", "mushrooms") #### For something like Eat the mushrooms with a fork
 
